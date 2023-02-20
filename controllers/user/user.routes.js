@@ -1,7 +1,7 @@
 const UserDb = require("./user.db");
-const UserController  = require("./user.controller");
+const UserController = require("./user.controller");
 
-class userRoutes {
+class UserRoutes {
   static routes = [
     {
       method: 'GET',
@@ -41,4 +41,5 @@ class userRoutes {
       },
     }]
 }
-module.exports = userRoutes;
+
+module.exports = UserRoutes

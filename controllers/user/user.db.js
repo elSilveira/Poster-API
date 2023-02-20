@@ -37,6 +37,15 @@ class UserDbController {
     return database.update('User', values, 'id=' + user.id);
   }
 
+  static async pathAuth(auth, user) {
+    let res = await database.insert(
+      'UserAuth',
+      'user_id, auth_id',
+      `"${user}", 
+      "${auth}"`)
+    return res.insertId;
+  }
+
   /**
   * Busca todos as users do banco
   */

@@ -1,4 +1,6 @@
 ./nodule_modules
 ../nodule_modules
+../../nodule_modules
 nodule_modules
 .env.js
+./.env.js

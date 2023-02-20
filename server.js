@@ -1,5 +1,6 @@
 const SessionRoutes = require('./routes/session.routes');
 const UserRoutes = require('./controllers/user/user.routes');
+const AuthRoutes = require('./controllers/auth/auth.routes');
 const fastify = require('fastify')({ logger: true });
 
 fastify.register(require("fastify-cors"), {
@@ -9,6 +10,7 @@ fastify.register(require("fastify-cors"), {
 async function addRoutes() {
   SessionRoutes.routes.forEach(route => fastify.route(route));
   UserRoutes.routes.forEach(route => fastify.route(route));
+  AuthRoutes.routes.forEach(route => fastify.route(route));
 }
 
 addRoutes()

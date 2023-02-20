@@ -7,11 +7,16 @@ class UserController {
     let newUser = await UserDbController.post(user);
     let token;
     if (newUser) {
-      token = SessionController.gerarToken(newUser.id, SessionController.gerarSegredo(newUser.id, newUser.email))
+      token = SessionController.gerarToken(newUser)
       newUser.token = token;
       await UserDbController.pathToken(newUser);
     }
     return token
+  }
+
+  static async authorizeUser(authId, userId) {
+    let newUser = await UserDbController.pathAuth(authId, userId);
+    return newUser
   }
 
 }
