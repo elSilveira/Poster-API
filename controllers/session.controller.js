@@ -3,16 +3,12 @@ const crypto = require('crypto');
 const env = require('../.env.js');
 const UserController = require('./user/user.controller.js');
 
-class SessionController {
-
-  static gerarSegredo() {
-    return crypto.createHash('sha256').update(env.APP.secret).digest('hex');
-  }
+module.exports = class SessionController {
 
   static gerarToken(user) {
     const payload = { AA: user.id, AB: user.email };
-    const opcoes = { expiresIn: '30d' };
-    const token = jwt.sign(payload, this.gerarSegredo(), opcoes);
+    const opcoes = { expiresIn: '10s' };
+    const token = jwt.sign(payload, crypto.createHash('sha256').update(env.APP.secret).digest('hex'), opcoes);
     return token;
   }
 
@@ -56,8 +52,11 @@ class SessionController {
 
   static async createSession(email, password) {
     let user = await UserController.getUserByLogin(email, password);
-    return user.token ?? UserController.updateUserToken(user)
+    if (!user) {
+      return "Not Found!"
+    }
+    let token = jwt.verify(user.token, crypto.createHash('sha256').update(env.APP.secret).digest('hex'));
+
+    return (token.exp < Date.now() / 1000) ? UserController.updateUserToken(user) : user.token;
   }
 }
-
-module.exports = SessionController

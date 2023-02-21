@@ -26,13 +26,12 @@ class UserDbController {
     return user;
   }
 
-  static pathToken(user) {
+  static async pathToken(user) {
     let values = `token="${user.token}"`;
-    return database.update('User', values, 'id=' + user.id);
+    return await database.update('User', values, 'id=' + user.id);
   }
 
   static async pathAuth(auth, user) {
-    database.update('User', values, 'id=' + user.id);
     let res = await database.insert(
       'UserAuth',
       'user_id, auth_id',

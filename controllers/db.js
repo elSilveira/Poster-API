@@ -3,7 +3,7 @@ const mysql = require('mysql2/promise');
 const env = require('../.env.js');
 
 class database {
-  
+
   static async createDatabase(nome) {
     const connection = await mysql.createConnection({
       host: env.DATABASE.host,
@@ -58,7 +58,7 @@ class database {
   static async update(tabela, valores, condicao) {
     const connection = await this.createConnection();
     const [rows, fields] = await connection.execute(`UPDATE ${tabela} SET ${valores} WHERE ${condicao}`);
-    return `Atualizado com sucesso`;
+    return rows[0];
   }
 
   static async get(tabela, id) {
