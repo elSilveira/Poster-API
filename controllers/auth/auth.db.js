@@ -1,10 +1,7 @@
 const database = require("../db");
 
 class AuthDbController {
-  /**
-  /**
-  * Busca todos as auths do banco
-  */
+
   static get() {
     return database.get('auth', null);
   }

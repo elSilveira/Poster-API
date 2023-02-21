@@ -27,14 +27,12 @@ class Routes {
         res.statusCode = code ? 200 : 500;
         let result = await SessionController.login(code);
         if (result != undefined) {
-          console.log(result);
           return code ? result : JSON.stringify('Check your code!');
         } else
           res.status(301).redirect('http://localhost:4200/continue?logged=true')
       },
     },
     app.get('/continue', async (req, res) => {
-      console.log(req.query);
       // Get the code from the redirect URL
       const code = req.query.code;
 

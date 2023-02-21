@@ -1,4 +1,5 @@
-const { validateToken } = require("../session.controller");
+const SessionController = require("../session.controller");
+const { validateToken, createSession } = require("../session.controller");
 const { finalizeGoogleAuth, googleAuth } = require("./auth.controller");
 
 class AuthRoutes {
@@ -19,7 +20,17 @@ class AuthRoutes {
         const code = req.query.code;
         return await googleAuth();
       },
-    }
+    },
+    {
+      method: 'POST',
+      url: '/login',
+      handler: async (req, res) => {
+        const email = req.body['email'];
+        const password = req.body['password'];
+        return await createSession(email,password);
+      },
+    },
+    
   ]
 }
 module.exports = AuthRoutes

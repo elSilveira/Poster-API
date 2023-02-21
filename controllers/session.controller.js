@@ -1,6 +1,7 @@
 const jwt = require('jsonwebtoken');
 const crypto = require('crypto');
 const env = require('../.env.js');
+const UserController = require('./user/user.controller.js');
 
 class SessionController {
 
@@ -24,7 +25,6 @@ class SessionController {
     }
   }
 
-  // Define the middleware function
   static validateToken(req, res, next) {
     // Get the authorization header from the request
     const authHeader = req.headers['authorization'];
@@ -52,6 +52,11 @@ class SessionController {
       // Return an error response if the authorization header is missing
       res.status(401).json({ error: 'Authorization header missing' });
     }
+  }
+
+  static async createSession(email, password) {
+    let user = await UserController.getUserByLogin(email, password);
+    return user.token ?? UserController.updateUserToken(user)
   }
 }
 

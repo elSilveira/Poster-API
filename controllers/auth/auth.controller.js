@@ -24,15 +24,15 @@ class AuthController {
     const { tokens } = await auth.getToken(code);
     auth.setCredentials(tokens);
 
-    var auth = {
+    var authObj = {
       provedor: 'google',
       provedor_id: 'google_consent',
-      token_acesso: code,
+      token_acesso: tokens,
       token_atualizacao: Date.now(),
       expiracao_token: new Date().toISOString().slice(0, 19).replace('T', ' ')
     }
 
-    let newAuth = await AuthDbController.post(auth);
+    let newAuth = await AuthDbController.post(authObj);
     UserController.authorizeUser(newAuth.id, user);
   }
 }

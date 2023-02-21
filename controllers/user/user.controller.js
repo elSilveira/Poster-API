@@ -3,20 +3,27 @@ const UserDbController = require("./user.db");
 
 class UserController {
 
+  static async getUserByLogin(email, password) {
+    return await UserDbController.getUserByLogin(email, password)
+  }
+
   static async addUser(user) {
     let newUser = await UserDbController.post(user);
+    return await this.updateUserToken(user);
+  }
+
+  static async updateUserToken(user) {
     let token;
-    if (newUser) {
-      token = SessionController.gerarToken(newUser)
-      newUser.token = token;
-      await UserDbController.pathToken(newUser);
+    if (user) {
+      token = SessionController.gerarToken(user)
+      user.token = token;
+      await UserDbController.pathToken(user);
     }
-    return token
+    return user;
   }
 
   static async authorizeUser(authId, userId) {
-    let newUser = await UserDbController.pathAuth(authId, userId);
-    return newUser
+    return await UserDbController.pathAuth(authId, userId);
   }
 
 }

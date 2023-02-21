@@ -3,7 +3,7 @@ const mysql = require('mysql2/promise');
 const env = require('../.env.js');
 
 class database {
-  //Cria o banco de dados com a conexão padrão
+  
   static async createDatabase(nome) {
     const connection = await mysql.createConnection({
       host: env.DATABASE.host,
@@ -38,7 +38,6 @@ class database {
   }
 
   static async insert(tabela, colunas, values) {
-    console.log(tabela, colunas)
     const connection = await this.createConnection();
     const [rows, fields] = await connection.execute(`insert into ${tabela} (${colunas}) values (${values})`);
     return rows;
@@ -56,11 +55,6 @@ class database {
     return rows;
   }
 
-  /**
-   * Cria uma string a partir do objeto dbObject para nova tabela no banco.
-   *
-   * @param valores Valores devem vir no formato 'key=value, key2=value2' 
-  */
   static async update(tabela, valores, condicao) {
     const connection = await this.createConnection();
     const [rows, fields] = await connection.execute(`UPDATE ${tabela} SET ${valores} WHERE ${condicao}`);
@@ -71,6 +65,13 @@ class database {
     const connection = await this.createConnection();
     const [rows, fields] = await connection.execute(`SELECT * FROM ${tabela} ${id != null ? 'WHERE ID = ' + id : ''}`);
     return rows;
+  }
+
+  static async getQuery(tabela, query) {
+    const connection = await this.createConnection();
+    let q = `SELECT * FROM ${tabela} WHERE ${query}`;
+    const [rows, fields] = await connection.execute(`SELECT * FROM ${tabela} WHERE ${query}`);
+    return rows[0];
   }
 
 }

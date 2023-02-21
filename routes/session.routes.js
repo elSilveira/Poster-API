@@ -1,5 +1,7 @@
 
 const db = require("../controllers/db");
+const SessionController = require("../controllers/session.controller");
+
 class sessionRoutes {
   static routes = [
     {

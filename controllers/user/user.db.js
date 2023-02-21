@@ -1,20 +1,17 @@
 const database = require("../db");
 
 class UserDbController {
-  /**
-  * Buscar um user específica pelo ID
-  *
-  * @param id da user a ser buscada
-  */
+
   static get(id) {
     return database.get('user', id);
   }
 
-  /**
-  * Busca todos as users do banco
-  */
   static get() {
     return database.get('user', null);
+  }
+
+  static async getUserByLogin(email, password) {
+    return await database.getQuery('user', `password='${password}' AND email='${email}'`);
   }
 
   static async post(user) {
@@ -29,15 +26,13 @@ class UserDbController {
     return user;
   }
 
-  /**
-  * Busca todos as users do banco
-  */
   static pathToken(user) {
     let values = `token="${user.token}"`;
     return database.update('User', values, 'id=' + user.id);
   }
 
   static async pathAuth(auth, user) {
+    database.update('User', values, 'id=' + user.id);
     let res = await database.insert(
       'UserAuth',
       'user_id, auth_id',
@@ -46,9 +41,6 @@ class UserDbController {
     return res.insertId;
   }
 
-  /**
-  * Busca todos as users do banco
-  */
   static delete(id) {
     return database.delete('User', id);
   }
