@@ -33,10 +33,9 @@ class UserDbController {
 
   static async pathAuth(auth, user) {
     let res = await database.insert(
-      'UserAuth',
+      'userauth',
       'user_id, auth_id',
-      `"${user}", 
-      "${auth}"`)
+      `${user},${auth}`)
     return res.insertId;
   }
 

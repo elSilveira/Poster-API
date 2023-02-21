@@ -1,24 +1,24 @@
 const SessionController = require("../session.controller");
-const { validateToken, createSession } = require("../session.controller");
-const { finalizeGoogleAuth, googleAuth } = require("./auth.controller");
+const AuthController = require("../auth/auth.controller");
 
 class AuthRoutes {
   static routes = [
     {
       method: 'GET',
-      url: '/auth', 
-      preHandler: validateToken,
+      url: '/auth',
+      preHandler: SessionController.validateToken,
       handler: async (req, res) => {
         const code = req.query.code;
-        return await finalizeGoogleAuth(code, req.user);
+        return await AuthController.finalizeGoogleAuth(code, req.user);
       },
     },
     {
       method: 'GET',
       url: '/google',
+      preHandler: SessionController.validateToken,
       handler: async (req, res) => {
         const code = req.query.code;
-        return await googleAuth();
+        return await AuthController.googleAuth();
       },
     },
     {
@@ -27,10 +27,10 @@ class AuthRoutes {
       handler: async (req, res) => {
         const email = req.body['email'];
         const password = req.body['password'];
-        return await createSession(email,password);
+        return await SessionController.createSession(email, password);
       },
     },
-    
+
   ]
 }
 module.exports = AuthRoutes

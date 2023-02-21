@@ -1,4 +1,5 @@
-const SessionController = require("../session.controller");
+
+const TokenController = require("../token.controller");
 const UserDbController = require("./user.db");
 
 class UserController {
@@ -10,14 +11,15 @@ class UserController {
 
   static async addUser(user) {
     let newUser = await UserDbController.post(user);
+    newUser.token = TokenController.gerarToken(newUser);
     return await this.updateUserToken(newUser);
   }
 
   static async updateUserToken(user) {
     if (user) {
-      user.token = SessionController.gerarToken(user);
       await UserDbController.pathToken(user);
-    }
+    } 
+    user.password = '***';
     return user;
   }
 

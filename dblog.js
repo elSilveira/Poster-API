@@ -14,7 +14,7 @@ CREATE TABLE Auth (
   id INT NOT NULL AUTO_INCREMENT,
   provedor VARCHAR(255) NOT NULL,
   provedor_id VARCHAR(255) NOT NULL,
-  token_acesso VARCHAR(255) NOT NULL,
+  token_acesso TEXT NOT NULL,
   token_atualizacao VARCHAR(255),
   expiracao_token DATETIME NOT NULL  ,
   PRIMARY KEY (id)

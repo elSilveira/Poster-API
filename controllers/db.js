@@ -74,6 +74,12 @@ class database {
     return rows[0];
   }
 
+  static async runQuery(query) {
+    const connection = await this.createConnection();
+    const [rows, fields] = await connection.execute(query)
+    return rows
+  }
+
 }
 
 module.exports = database;
