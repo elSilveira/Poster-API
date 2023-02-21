@@ -2,7 +2,7 @@ To run you will need the .env.yaml.
 
 
 .env.yaml example: 
-
+``` 
 module.exports = {
   DATABASE: {
     host: 'databasehost',
@@ -19,3 +19,4 @@ module.exports = {
     secret: 'secretworld'
   }
 };
+```
