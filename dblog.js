@@ -36,9 +36,19 @@ CREATE TABLE Account (
   PRIMARY KEY (id)
 );
 
+CREATE TABLE UserAccount (
+  id INT NOT NULL AUTO_INCREMENT,
+  user_id INT NOT NULL,
+  account_id INT NOT NULL,
+  PRIMARY KEY (id),
+  FOREIGN KEY (user_id) REFERENCES User(id),
+  FOREIGN KEY (account_id) REFERENCES Account(id)
+);
+
 CREATE TABLE Channel (
   id INT NOT NULL AUTO_INCREMENT,
-  channel_key INT NOT NULL,
+  chave VARCHAR(255) NOT NULL,
+  plataforma VARCHAR(255) NOT NULL,
   nome VARCHAR(255) NOT NULL,
   descricao VARCHAR(255),
   PRIMARY KEY (id)

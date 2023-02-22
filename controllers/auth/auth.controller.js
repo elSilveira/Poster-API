@@ -1,10 +1,11 @@
 const AuthDbController = require("./auth.db");
-const { OAuth2Client } = require("google-auth-library");
-const env = require('../../.env.js');
 const jwt = require('jsonwebtoken');
 const { segredo } = require("../token.controller");
 const UserController = require("../user/user.controller");
+const env = require('../../.env.js');
+const { OAuth2Client } = require("google-auth-library");
 const auth = new OAuth2Client(env.GOOGLE.clientId, env.GOOGLE.clientSecret, env.GOOGLE.redirectUrl);
+
 class AuthController {
 
   static async googleAuth() {
