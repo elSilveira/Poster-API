@@ -19,7 +19,7 @@ class ChannelRoutes {
       url: '/channel/:id',
       preHandler: SessionController.validateToken,
       handler: async (request, reply) => {
-        return await ChannelController.getUserChannels(request.params['id']);
+        return await ChannelController.getChannelsByAccount(request.params['id']);
       }
     },
     {

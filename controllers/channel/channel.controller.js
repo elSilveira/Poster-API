@@ -9,14 +9,14 @@ const jwt = require('jsonwebtoken');
 class ChannelController {
 
   static async finalizeGoogleAuth(code, accountChannelId) {
-    // const auth = new OAuth2Client(env.GOOGLE.clientId, env.GOOGLE.clientSecret, env.GOOGLE.redirectChannelUrl + `?id=` + accountChannelId);
-    // const { tokens } = await auth.getToken(code);
-    // auth.setCredentials(tokens);
+    const auth = new OAuth2Client(env.GOOGLE.clientId, env.GOOGLE.clientSecret, env.GOOGLE.redirectChannelUrl + `?id=` + accountChannelId);
+    const { tokens } = await auth.getToken(code);
+    auth.setCredentials(tokens);
 
     var authObj = {
       provedor: 'google',
       provedor_id: 'youtube_permissions',
-      token_acesso: jwt.sign(code, segredo()),
+      token_acesso: jwt.sign(tokens, segredo()),
       token_atualizacao: Date.now(),
       expiracao_token: new Date().toISOString().slice(0, 19).replace('T', ' ')
     }
@@ -39,6 +39,10 @@ class ChannelController {
     return await ChannelDbController.getUserAuthorizedChannels(userId)
   }
   
+  static async getChannelsByAccount(accountId) {
+    return await ChannelDbController.getChannelsByAccount(accountId)
+  }
+
   static async getUserChannels(userId) {
     return await ChannelDbController.getUserChannels(userId)
   }
@@ -60,8 +64,7 @@ class ChannelController {
         'https://www.googleapis.com/auth/youtubepartner',
         'https://www.googleapis.com/auth/youtube.force-ssl']
     });
-    console.log('Please visit this url:', authUrl);
-    return authUrl
+    return {url: authUrl}
   }
 
 }

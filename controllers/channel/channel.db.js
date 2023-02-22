@@ -2,6 +2,14 @@ const database = require("../db");
 
 class ChannelDbController {
 
+  static getChannelsByAccount(id = null) {
+    return database.runQuery(`
+      SELECT *, ac.id as accountchannel_id FROM channel c 
+      JOIN accountchannel ac ON c.id = ac.channel_id 
+      LEFT JOIN accountchannelauth ach ON ach.accountchannel_id = ac.id 
+      where ac.account_id = ${id};`);
+  }
+
   static getUserChannels(id = null) {
     return database.runQuery(`
       SELECT c.*, ac.id as accountchannel_id FROM channel c 

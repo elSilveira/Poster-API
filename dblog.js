@@ -84,4 +84,12 @@ CREATE TABLE AccountChannelAuth (
   drop table Auth;
   drop table UserAuth;
 
+  delete from AccountChannelAuth;
+  delete from AccountChannel;
+  delete from UserAccountChannel;
+  delete from UserAccount;
+  delete from Channel;
+  delete from UserAuth;
+  delete from User;
+  delete from Auth;
  */

@@ -9,7 +9,7 @@ class AccountRoutes {
       preHandler: SessionController.validateToken,
       url: '/account',
       handler: async (request, reply) => {
-        return await AccountDb.getUserAccounts(request.user);
+        return await AccountDb.getUserAccounts(request.user, request.query['populate']);
       },
     },
     {
