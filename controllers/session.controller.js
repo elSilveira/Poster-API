@@ -4,6 +4,7 @@ const env = require('../.env.js');
 const UserController = require('./user/user.controller.js');
 const { segredo } = require('./token.controller.js');
 module.exports = class SessionController {
+  
   static async validateToken(req, res, next) {
     // Get the authorization header from the request
     const authHeader = req.headers['authorization'];
